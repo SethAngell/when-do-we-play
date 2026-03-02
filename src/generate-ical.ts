@@ -49,9 +49,9 @@ for (const file of files) {
     const end = new Date(start.getTime() + (1 * 60 + 50) * 60 * 1000);
 
     // CONSISTENT UID logic: 
-    // Format: volleyball-<team>-week-<week>-<iso-date>
-    const dateStamp = start.toISOString().split('T')[0];
-    const uid = `volleyball-${normalizedTeam}-week-${entry.week}-${dateStamp}`;
+    // Format: volleyball-<team>-week-<week>
+    // This ensures that even if date/time changes, the calendar app updates the existing event.
+    const uid = `volleyball-${normalizedTeam}-week-${entry.week}`;
 
     calendar.createEvent({
       id: uid,
