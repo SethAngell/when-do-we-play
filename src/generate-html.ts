@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 
-const publicDir = path.resolve('public');
 const calendarsDir = path.resolve('public/calendars');
 
 // Find all .ics files
@@ -9,7 +8,7 @@ const files = fs.readdirSync(calendarsDir).filter(f => f.endsWith('.ics'));
 
 const listItems = files.map(file => {
   const teamName = file.replace('.ics', '').replace(/-/g, ' ');
-  const url = `calendars/${file}`;
+  const url = `public/calendars/${file}`;
   const colors = ['#FFD700', '#FF69B4', '#00FFFF', '#ADFF2F', '#FF4500'];
   const bgColor = colors[Math.floor(Math.random() * colors.length)];
   
@@ -89,5 +88,5 @@ const html = `
 </html>
 `;
 
-fs.writeFileSync(path.join(publicDir, 'index.html'), html);
-console.log(`Generated public/index.html with ${files.length} calendar links.`);
+fs.writeFileSync(path.resolve('index.html'), html);
+console.log(`Generated root index.html with ${files.length} calendar links.`);
