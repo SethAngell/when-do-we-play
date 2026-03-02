@@ -7,8 +7,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "discover": "npx playwright test tests/discovery.spec.ts --project=chromium",
-    "scrape": "npx playwright test tests/scraper.spec.ts --project=chromium",
+    "discover": "npx playwright test tests/discovery.spec.ts --project=chromium --reporter=list",
+    "scrape": "npx playwright test tests/scraper.spec.ts --project=chromium --reporter=list",
     "generate:ical": "npx tsx src/generate-ical.ts",
     "generate:html": "npx tsx src/generate-html.ts",
     "sync": "npm run scrape && npm run generate:ical && npm run generate:html"

@@ -23,7 +23,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - name: Discover and Register
-        run: npx playwright test tests/discovery.spec.ts --project=chromium --workers=1
+        run: npx playwright test tests/discovery.spec.ts --project=chromium --workers=1 --reporter=list
         env:
           LEAGUE_NAME: ${{ github.event.inputs.league_name }}
           DIVISION_NAME: ${{ github.event.inputs.division_name }}
