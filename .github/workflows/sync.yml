@@ -20,7 +20,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git add data/*.json
+          git add data/
           git add public/
           git commit -m "Sync schedule and update calendars" || echo "No changes to commit"
           git push

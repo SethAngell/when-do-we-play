@@ -83,6 +83,11 @@ test("Register and Discover Team", async ({ page }) => {
     console.log(`Added new team: ${teamName}`);
   }
 
+  const dir = path.dirname(teamsPath);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+
   fs.writeFileSync(teamsPath, JSON.stringify(teams, null, 2));
   console.log(`Successfully registered ${teamName} with Event ${eventId} and Division ${divisionId}`);
 });
