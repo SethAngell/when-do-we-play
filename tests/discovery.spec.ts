@@ -4,7 +4,8 @@ import path from "path";
 
 import { HydratedTeamSchema } from "../schemas/team-schema";
 
-const teamsPath = path.resolve("data", "teams-hydrated.json");
+// Use absolute path relative to the current working directory (project root)
+const teamsPath = path.join(process.cwd(), "data", "teams-hydrated.json");
 
 /**
  * Register a team by discovering its IDs.
@@ -17,6 +18,12 @@ test("Register and Discover Team", async ({ page }) => {
 
   if (!leagueName || !teamName) {
     throw new Error("LEAGUE_NAME and TEAM_NAME environment variables are required.");
+  }
+
+  // Ensure the directory exists before doing anything else
+  const dir = path.dirname(teamsPath);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
   }
 
   console.log(`Discovering IDs for: ${leagueName} - ${divisionName}`);
@@ -81,11 +88,6 @@ test("Register and Discover Team", async ({ page }) => {
   } else {
     teams.push(newTeam);
     console.log(`Added new team: ${teamName}`);
-  }
-
-  const dir = path.dirname(teamsPath);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
   }
 
   fs.writeFileSync(teamsPath, JSON.stringify(teams, null, 2));
