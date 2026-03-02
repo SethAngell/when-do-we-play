@@ -3,14 +3,21 @@ on:
   workflow_dispatch:
     inputs:
       league_name:
-        description: 'League Name'
+        description: "League Name"
         required: true
       division_name:
-        description: 'Division Name'
+        description: "Division Name"
         required: true
       team_name:
-        description: 'Team Name'
+        description: "Team Name"
         required: true
+
+permissions:
+  actions: write
+  contents: write
+  id-token: write
+  pages: write
+  pull-requests: write
 
 jobs:
   register:
