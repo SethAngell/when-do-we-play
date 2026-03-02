@@ -4,8 +4,12 @@ import path from "path";
 
 import { HydratedTeamSchema } from "../schemas/team-schema";
 
-// Use absolute path relative to the current working directory (project root)
-const teamsPath = path.join(process.cwd(), "data", "teams-hydrated.json");
+import { fileURLToPath } from 'url';
+
+// Robust path resolution for CI
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const teamsPath = path.resolve(__dirname, "../data/teams-hydrated.json");
 
 /**
  * Register a team by discovering its IDs.
