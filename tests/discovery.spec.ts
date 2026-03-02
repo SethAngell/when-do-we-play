@@ -15,13 +15,12 @@ test("Register and Discover Team", async ({ page }) => {
     teamName: process.env.TEAM_NAME,
   });
 
-  if (!leagueName || !teamName) {
+  if (!registrationRequest.leagueName || !registrationRequest.teamName) {
     throw new Error(
       "LEAGUE_NAME and TEAM_NAME environment variables are required.",
     );
   }
 
-  // Define paths inside the test to ensure they use the correct process context
   const dataDir = path.join(process.cwd(), "data");
   const teamsPath = path.join(dataDir, "teams-hydrated.json");
 
@@ -35,7 +34,9 @@ test("Register and Discover Team", async ({ page }) => {
     fs.mkdirSync(dataDir, { recursive: true });
   }
 
-  console.log(`Discovering IDs for: ${leagueName} - ${divisionName}`);
+  console.log(
+    `Discovering IDs for: ${registrationRequest.leagueName} - ${registrationRequest.divisionName}`,
+  );
 
   await page.goto("https://captnbills.volleyballlife.com/events");
 
@@ -51,7 +52,7 @@ test("Register and Discover Team", async ({ page }) => {
   // Search for the league
   await page
     .getByRole("textbox", { name: /Search Tournaments/i })
-    .fill(leagueName);
+    .fill(registrationRequest.leagueName);
 
   // Extract Event ID
   const eventLink = page
@@ -62,13 +63,18 @@ test("Register and Discover Team", async ({ page }) => {
   const eventHref = await eventLink.getAttribute("href");
   const eventId = eventHref?.match(/event\/(\d+)/)?.[1];
 
-  if (!eventId) throw new Error(`Could not find event ID for ${leagueName}`);
+  if (!eventId)
+    throw new Error(
+      `Could not find event ID for ${registrationRequest.leagueName}`,
+    );
   await eventLink.click();
 
   // Extract Division ID
   let divisionId: string | undefined;
-  if (divisionName) {
-    const divOption = page.getByRole("option", { name: divisionName }).first();
+  if (registrationRequest.divisionName) {
+    const divOption = page
+      .getByRole("option", { name: registrationRequest.divisionName })
+      .first();
     await divOption.waitFor({ state: "visible" });
     await divOption.click({ force: true });
 
@@ -79,12 +85,14 @@ test("Register and Discover Team", async ({ page }) => {
   }
 
   if (!divisionId)
-    throw new Error(`Could not find division ID for ${divisionName}`);
+    throw new Error(
+      `Could not find division ID for ${registrationRequest.divisionName}`,
+    );
 
   const newTeam = HydratedTeamSchema.parse({
-    league: leagueName,
-    division: divisionName || "",
-    teamName: teamName,
+    league: registrationRequest.leagueName,
+    division: registrationRequest.divisionName || "",
+    teamName: registrationRequest.teamName,
     eventId,
     divisionId: divisionId || "",
   });
@@ -103,19 +111,21 @@ test("Register and Discover Team", async ({ page }) => {
 
   // Update or Add
   const index = teams.findIndex(
-    (t: any) => t.teamName === teamName && t.league === leagueName,
+    (t: any) =>
+      t.teamName === registrationRequest.teamName &&
+      t.league === registrationRequest.leagueName,
   );
   if (index !== -1) {
     teams[index] = newTeam;
-    console.log(`Updated existing team: ${teamName}`);
+    console.log(`Updated existing team: ${registrationRequest.teamName}`);
   } else {
     teams.push(newTeam);
-    console.log(`Added new team: ${teamName}`);
+    console.log(`Added new team: ${registrationRequest.teamName}`);
   }
 
   console.log(`Writing to: ${teamsPath}`);
   fs.writeFileSync(teamsPath, JSON.stringify(teams, null, 2));
   console.log(
-    `Successfully registered ${teamName} with Event ${eventId} and Division ${divisionId}`,
+    `Successfully registered ${registrationRequest.teamName} with Event ${eventId} and Division ${divisionId}`,
   );
 });
