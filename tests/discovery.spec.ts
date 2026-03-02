@@ -1,15 +1,7 @@
 import { test } from "@playwright/test";
 import fs from "fs";
 import path from "path";
-
 import { HydratedTeamSchema } from "../schemas/team-schema";
-
-import { fileURLToPath } from 'url';
-
-// Robust path resolution for CI
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const teamsPath = path.resolve(__dirname, "../data/teams-hydrated.json");
 
 /**
  * Register a team by discovering its IDs.
@@ -24,10 +16,18 @@ test("Register and Discover Team", async ({ page }) => {
     throw new Error("LEAGUE_NAME and TEAM_NAME environment variables are required.");
   }
 
-  // Ensure the directory exists before doing anything else
-  const dir = path.dirname(teamsPath);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
+  // Define paths inside the test to ensure they use the correct process context
+  const dataDir = path.join(process.cwd(), "data");
+  const teamsPath = path.join(dataDir, "teams-hydrated.json");
+
+  console.log(`Working Directory: ${process.cwd()}`);
+  console.log(`Target Data Directory: ${dataDir}`);
+  console.log(`Target File Path: ${teamsPath}`);
+
+  // Ensure the directory exists
+  if (!fs.existsSync(dataDir)) {
+    console.log("Creating data directory...");
+    fs.mkdirSync(dataDir, { recursive: true });
   }
 
   console.log(`Discovering IDs for: ${leagueName} - ${divisionName}`);
@@ -81,7 +81,11 @@ test("Register and Discover Team", async ({ page }) => {
   // Append to hydrated list
   let teams = [];
   if (fs.existsSync(teamsPath)) {
-    teams = JSON.parse(fs.readFileSync(teamsPath, "utf-8"));
+    try {
+      teams = JSON.parse(fs.readFileSync(teamsPath, "utf-8"));
+    } catch (e) {
+      console.error("Error reading existing hydrated teams file, starting fresh.");
+    }
   }
   
   // Update or Add
@@ -94,6 +98,7 @@ test("Register and Discover Team", async ({ page }) => {
     console.log(`Added new team: ${teamName}`);
   }
 
+  console.log(`Writing to: ${teamsPath}`);
   fs.writeFileSync(teamsPath, JSON.stringify(teams, null, 2));
   console.log(`Successfully registered ${teamName} with Event ${eventId} and Division ${divisionId}`);
 });
