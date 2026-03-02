@@ -49,9 +49,20 @@ const html = `
             border: 4px solid #000; 
             box-shadow: 8px 8px 0px #000;
             margin-bottom: 40px;
+            max-width: 100%;
+            word-wrap: break-word;
         }
         p { font-size: 1.5rem; font-weight: bold; margin-bottom: 30px; }
         ul { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            p { font-size: 1.2rem; }
+            ul { grid-template-columns: 1fr; gap: 20px; }
+            li { padding: 15px; }
+            .team-name { font-size: 1.5rem; }
+        }
+
         li { 
             border: 4px solid #000; 
             padding: 25px; 

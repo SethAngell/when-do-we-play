@@ -25,9 +25,20 @@
             border: 4px solid #000; 
             box-shadow: 8px 8px 0px #000;
             margin-bottom: 40px;
+            max-width: 100%;
+            word-wrap: break-word;
         }
         p { font-size: 1.5rem; font-weight: bold; margin-bottom: 30px; }
         ul { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            p { font-size: 1.2rem; }
+            ul { grid-template-columns: 1fr; gap: 20px; }
+            li { padding: 15px; }
+            .team-name { font-size: 1.5rem; }
+        }
+
         li { 
             border: 4px solid #000; 
             padding: 25px; 
@@ -58,28 +69,28 @@
     <p>SUBSCRIBE TO YOUR TEAM'S SCHEDULE. COPY THE LINK BELOW INTO GOOGLE CALENDAR OR ICAL.</p>
     <ul>
         
-    <li style="background: #FFD700;">
+    <li style="background: #ADFF2F;">
       <div class="team-name">BARELY A BRAINCELL</div>
       <a class="btn" href="public/calendars/barely-a-braincell.ics">DOWNLOAD .ICS</a>
       <div class="url-box">
         <code>https://SethAngell.github.io/when-do-we-play/public/calendars/barely-a-braincell.ics</code>
       </div>
     </li>
-    <li style="background: #FF4500;">
+    <li style="background: #00FFFF;">
       <div class="team-name">CAT'S KITTIES</div>
       <a class="btn" href="public/calendars/cat's-kitties.ics">DOWNLOAD .ICS</a>
       <div class="url-box">
         <code>https://SethAngell.github.io/when-do-we-play/public/calendars/cat's-kitties.ics</code>
       </div>
     </li>
-    <li style="background: #FFD700;">
+    <li style="background: #FF69B4;">
       <div class="team-name">CATS KITTIES</div>
       <a class="btn" href="public/calendars/cats-kitties.ics">DOWNLOAD .ICS</a>
       <div class="url-box">
         <code>https://SethAngell.github.io/when-do-we-play/public/calendars/cats-kitties.ics</code>
       </div>
     </li>
-    <li style="background: #FF69B4;">
+    <li style="background: #00FFFF;">
       <div class="team-name">LIZ'S LOT LIZARDS</div>
       <a class="btn" href="public/calendars/liz's-lot-lizards.ics">DOWNLOAD .ICS</a>
       <div class="url-box">
@@ -87,6 +98,6 @@
       </div>
     </li>
     </ul>
-    <small>LAST UPDATED: 3/2/2026, 12:55:42 PM</small>
+    <small>LAST UPDATED: 3/2/2026, 12:59:09 PM</small>
 </body>
 </html>
