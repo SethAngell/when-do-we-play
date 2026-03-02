@@ -1,0 +1,37 @@
+name: Register Team
+on:
+  workflow_dispatch:
+    inputs:
+      league_name:
+        description: 'League Name'
+        required: true
+      division_name:
+        description: 'Division Name'
+        required: true
+      team_name:
+        description: 'Team Name'
+        required: true
+
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Discover and Register
+        run: npx playwright test tests/discovery.spec.ts --project=chromium
+        env:
+          LEAGUE_NAME: ${{ github.event.inputs.league_name }}
+          DIVISION_NAME: ${{ github.event.inputs.division_name }}
+          TEAM_NAME: ${{ github.event.inputs.team_name }}
+      - name: Commit changes
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add data/teams-hydrated.json
+          git commit -m "Register team: ${{ github.event.inputs.team_name }}" || echo "No changes to commit"
+          git push

@@ -1,0 +1,18 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//sebbo.net//ical-generator//EN
+METHOD:PUBLISH
+NAME:Volleyball: Liz's Lot Lizards
+X-WR-CALNAME:Volleyball: Liz's Lot Lizards
+BEGIN:VEVENT
+UID:496b98a3-cf3f-4e76-ba00-3a53b707b26a
+SEQUENCE:0
+DTSTAMP:20260302T034022Z
+DTSTART:20260305T014500Z
+DTEND:20260305T033500Z
+SUMMARY:Volleyball: Liz's Lot Lizards
+LOCATION:Courts 11 & 12 at Capt'n Bill's
+DESCRIPTION:Week 1 of regular season.
+URL;VALUE=URI:https://captnbills.volleyballlife.com/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,18 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//sebbo.net//ical-generator//EN
+METHOD:PUBLISH
+NAME:Volleyball: barely a braincell
+X-WR-CALNAME:Volleyball: barely a braincell
+BEGIN:VEVENT
+UID:8a98864d-08e1-46da-a81c-13b71222df07
+SEQUENCE:0
+DTSTAMP:20260302T034022Z
+DTSTART:20260306T014500Z
+DTEND:20260306T033500Z
+SUMMARY:Volleyball: barely a braincell
+LOCATION:Courts 11 & 12 at Capt'n Bill's
+DESCRIPTION:Week 1 of regular season.
+URL;VALUE=URI:https://captnbills.volleyballlife.com/
+END:VEVENT
+END:VCALENDAR
