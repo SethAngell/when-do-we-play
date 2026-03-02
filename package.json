@@ -1,0 +1,24 @@
+{
+  "name": "when-do-we-play",
+  "version": "1.0.0",
+  "description": "When do we play volleyball this week?",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "discover": "npx playwright test tests/discovery.spec.ts --project=chromium --reporter=list",
+    "scrape": "npx playwright test tests/scraper.spec.ts --project=chromium --reporter=list",
+    "generate:ical": "npx tsx src/generate-ical.ts",
+    "generate:html": "npx tsx src/generate-html.ts",
+    "sync": "npm run scrape && npm run generate:ical && npm run generate:html"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.3"
+  },
+  "dependencies": {
+    "ical-generator": "^10.0.0",
+    "zod": "^4.3.6"
+  }
+}

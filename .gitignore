@@ -1,0 +1,13 @@
+
+# Playwright
+node_modules/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+data/raw-division-update.json
+data/schedule-*.json
+debug-*.png
+navigation-fail.png
+
+/playwright/.auth/
